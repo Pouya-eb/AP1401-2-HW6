@@ -56,3 +56,8 @@ def IsInCircule(x, y):
     if (x - r) ** 2 + (y - r) ** 2 <= r**2:
         return True
     return False
+
+
+def CalculatePi(n):
+    num = [IsInCircule(random.random(), random.random()) for _ in range(n)]
+    return 4 * num.count(True) / num.__len__()
