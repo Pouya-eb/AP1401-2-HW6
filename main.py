@@ -86,3 +86,13 @@ for i in enumerate(Input):
         Output.append(i[1])
 Output.sort()
 print(*Output)
+
+print(
+    *sorted(
+        [
+            i[1]
+            for i in enumerate(list(map(int, input().split())))
+            if i[0] % 6 == 5 and i[1] % 6 == 0
+        ]
+    )
+)
