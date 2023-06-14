@@ -47,3 +47,12 @@ All_items = dict(zip(("A0", "A1", "A2", "A3", "A4"), (A0, A1, A2, A3, A4)))
 for key, val in All_items.items():
     print(f"{key} : {val}")
 
+import math
+import random
+
+
+def IsInCircule(x, y):
+    r = 0.5
+    if (x - r) ** 2 + (y - r) ** 2 <= r**2:
+        return True
+    return False
