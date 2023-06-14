@@ -78,3 +78,11 @@ def Find():
 
 
 Find()
+
+Input = list(map(int, input().split()))
+Output = list()
+for i in enumerate(Input):
+    if i[0] % 6 == 5 and i[1] % 6 == 0:
+        Output.append(i[1])
+Output.sort()
+print(*Output)
