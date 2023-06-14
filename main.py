@@ -61,3 +61,20 @@ def IsInCircule(x, y):
 def CalculatePi(n):
     num = [IsInCircule(random.random(), random.random()) for _ in range(n)]
     return 4 * num.count(True) / num.__len__()
+
+
+def Find():
+    n = 1
+    while True:
+        pi = CalculatePi(n)
+        n += 1
+        diff = abs(pi - math.pi)
+        if diff / math.pi < 0.01:
+            print(f"approximate pi : {pi:0.3f}")
+            print(f"real pi : {math.pi:0.3f}")
+            print(f"minimum number of points : {n}")
+            break
+    return n
+
+
+Find()
