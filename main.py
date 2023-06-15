@@ -82,6 +82,7 @@ Find()
 import subprocess
 import time
 from math import pi, cos, fabs
+import matplotlib.pyplot as plt
 
 
 class CGaussSolver:
@@ -154,7 +155,9 @@ compile_command = [
     "main",
 ]
 
-iteration = 15
+cpp_time = list()
+python_time = list()
+iteration = 11
 
 for i in range(1, iteration + 1):
     t1_py = time.time()
@@ -172,9 +175,21 @@ for i in range(1, iteration + 1):
     print(f"Python exe time is : {python_time_i} ms")
     print(f"C++ exe time is    : {cpp_time_i} ms")
     print()
+    cpp_time.append(cpp_time_i)
+    python_time.append(python_time_i)
+
+x_axis = list(range(1, iteration + 1))
+plt.figure(num="Python vs C++")
+plt.plot(x_axis, python_time, color="red", scalex=[1, iteration + 1])
+plt.plot(x_axis, cpp_time, color="blue", scalex=[1, iteration + 1])
+plt.legend(["Python", "C++"])
+plt.xlabel("Iteration")
+plt.ylabel("Time (ms)")
+plt.savefig("img.pdf", format="pdf")
+# plt.show()
 
 
-Input = list(map(int, input().split()))
+Input = list(map(int, input("Enter the sequence : ").split()))
 Output = list()
 for i in enumerate(Input):
     if i[0] % 6 == 5 and i[1] % 6 == 0:
@@ -186,7 +201,7 @@ print(
     *sorted(
         [
             i[1]
-            for i in enumerate(list(map(int, input().split())))
+            for i in enumerate(list(map(int, input("Enter the sequence : ").split())))
             if i[0] % 6 == 5 and i[1] % 6 == 0
         ]
     )
