@@ -79,6 +79,8 @@ def Find():
 
 Find()
 
+import subprocess
+import time
 from math import pi, cos, fabs
 
 
@@ -105,17 +107,19 @@ class CGaussSolver:
         )
 
     def LegendreZeroes(self, m_N, i):
+        x_new = 0
         x_old = cos(pi * (i - 0.25) / (m_N + 0.5))
         iteration = 1
-        while True:
+        if iteration != 1:
+            x_old = x_new
+            x_new = x_old - self.Legendre(m_N, x_old) / self.DLegendre(m_N, x_old)
+            iteration += 1
+
+        while 1 + fabs((x_new - x_old)) > 1.0:
             if iteration != 1:
                 x_old = x_new
             x_new = x_old - self.Legendre(m_N, x_old) / self.DLegendre(m_N, x_old)
             iteration += 1
-            print(1 + fabs((x_new - x_old)))
-            if 1 + fabs((x_new - x_old)) > 1.0:
-                print("in if ")
-                break
 
         return x_new
 
@@ -135,6 +139,11 @@ class CGaussSolver:
 
     def GetResult(self):
         return self.m_Result
+
+
+def my_func(x):
+    xN = 0.5 * x + 0.5
+    return ((xN**3) / (xN + 1)) * cos(xN**2)
 
 
 Input = list(map(int, input().split()))
