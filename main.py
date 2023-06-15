@@ -79,6 +79,32 @@ def Find():
 
 Find()
 
+from math import pi, cos, fabs
+
+
+class CGaussSolver:
+    def __init__(self, pf, a, b, n):
+        self.m_Pf = pf
+        self.m_A = a
+        self.m_B = b
+        self.m_N = n
+
+    def Legendre(self, m_N, x):
+        if m_N == 0:
+            return 1
+        elif m_N == 1:
+            return x
+        else:
+            return ((2 * m_N - 1) / m_N) * x * self.Legendre(m_N - 1, x) - (
+                (m_N - 1) / m_N
+            ) * self.Legendre(m_N - 2, x)
+
+    def DLegendre(self, m_N, x):
+        return (m_N / (x * x - 1)) * (
+            x * self.Legendre(m_N, x) - self.Legendre(m_N - 1, x)
+        )
+
+
 Input = list(map(int, input().split()))
 Output = list()
 for i in enumerate(Input):
