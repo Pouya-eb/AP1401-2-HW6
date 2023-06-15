@@ -101,8 +101,40 @@ class CGaussSolver:
 
     def DLegendre(self, m_N, x):
         return (m_N / (x * x - 1)) * (
-            x * self.Legendre(m_N, x) - self.Legendre(m_N - 1, x)
+            (x * self.Legendre(m_N, x)) - self.Legendre(m_N - 1, x)
         )
+
+    def LegendreZeroes(self, m_N, i):
+        x_old = cos(pi * (i - 0.25) / (m_N + 0.5))
+        iteration = 1
+        while True:
+            if iteration != 1:
+                x_old = x_new
+            x_new = x_old - self.Legendre(m_N, x_old) / self.DLegendre(m_N, x_old)
+            iteration += 1
+            print(1 + fabs((x_new - x_old)))
+            if 1 + fabs((x_new - x_old)) > 1.0:
+                print("in if ")
+                break
+
+        return x_new
+
+    def Weight(self, m_N, x):
+        return 2 / ((1 - x**2) * self.DLegendre(m_N, x) ** 2)
+
+    def Exec(self):
+        integral = 0
+        iteration = 1
+        iteration += 1
+        for i in range(1, self.m_N + 1):
+            integral += self.m_Pf(self.LegendreZeroes(self.m_N, i)) * self.Weight(
+                self.m_N, self.LegendreZeroes(self.m_N, i)
+            )
+
+        self.m_Result = ((self.m_B - self.m_A) / 2) * integral
+
+    def GetResult(self):
+        return self.m_Result
 
 
 Input = list(map(int, input().split()))
