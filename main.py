@@ -141,9 +141,37 @@ class CGaussSolver:
         return self.m_Result
 
 
-def my_func(x):
+def myFunction(x):
     xN = 0.5 * x + 0.5
     return ((xN**3) / (xN + 1)) * cos(xN**2)
+
+
+compile_command = [
+    "g++",
+    "./cppFiles/main.cpp",
+    "./cppFiles/CGaussSolver.cpp",
+    "-o",
+    "main",
+]
+
+iteration = 15
+
+for i in range(1, iteration + 1):
+    t1_py = time.time()
+    solver = CGaussSolver(myFunction, 0, 1, i)
+    solver.Exec()
+    t2_py = time.time()
+    run_command = ["./main", f"{i}"]
+    subprocess.run(compile_command)
+    t1_cpp = time.time()
+    subprocess.call(run_command)
+    t2_cpp = time.time()
+    python_time_i = (t2_py - t1_py) * 1000
+    cpp_time_i = (t2_cpp - t1_cpp) * 1000
+    print(f"Resul of Python code (n = {i}) : {solver.GetResult()}")
+    print(f"Python exe time is : {python_time_i} ms")
+    print(f"C++ exe time is    : {cpp_time_i} ms")
+    print()
 
 
 Input = list(map(int, input().split()))
